@@ -1,0 +1,1420 @@
+{
+	"info": {
+		"_postman_id": "545e7f58-d289-4c9c-b216-25192973ef77",
+		"name": "Lumen API Newspaper LARAVEL (univalle)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5726533"
+	},
+	"item": [
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"JWT_ACCESS_TOKEN\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@newspaper.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/auth/login",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/comments",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"sending_date\": \"20240222\",\r\n    \"publication_date\": \"20240222\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"content_id\": 1,\r\n    \"user_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/comments",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/comments/13",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"comments",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 13,\r\n    \"text\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"sending_date\": 20240222,\r\n    \"publication_date\": 20240222,\r\n    \"status\": \"PENDING\",\r\n    \"content_id\": 1,\r\n    \"user_id\": 1,\r\n    \"created_at\": \"2024-02-28T10:04:49.000000Z\",\r\n    \"updated_at\": \"2024-02-28T10:04:49.000000Z\",\r\n    \"created_by\": \"system\",\r\n    \"updated_by\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/comments/13",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"comments",
+								"13"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Content with error in category_alias",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"tags\": \"referéndum,Evo Morales,Iván Lima\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"featured\": true,\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"1\",\r\n    \"category_title\": \"Política\",\r\n    \"category_alias\": \"politica2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/v1/contents/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"contents",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Feb 2024 23:46:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"tags\": \"referéndum,Evo Morales,Iván Lima\",\n    \"format\": \"WITH_IMAGE\",\n    \"featured\": true,\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"1\",\n    \"category_title\": \"Política\",\n    \"category_alias\": \"politica2\",\n    \"created_at\": \"2024-02-22T23:40:05.000000Z\",\n    \"updated_at\": \"2024-02-22T23:46:12.000000Z\",\n    \"created_by\": \"system\",\n    \"updated_by\": \"system\",\n    \"url\": \"/politica2/1_lima-sugiere-otro-referendum-para-despedir-a-evo-morales.html\"\n}"
+						},
+						{
+							"name": "Update Content",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240223\",\r\n    \"category_id\": 12\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/contents/4",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"contents",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 23 Feb 2024 00:45:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"format\": \"WITH_IMAGE\",\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"20240223\",\n    \"category_title\": \"Nacional\",\n    \"category_alias\": \"nacional\",\n    \"created_at\": \"2024-02-23T00:37:14.000000Z\",\n    \"updated_at\": \"2024-02-23T00:45:54.000000Z\",\n    \"created_by\": \"system\",\n    \"updated_by\": \"system\",\n    \"category_id\": null,\n    \"url\": \"/nacional/20240223_lima-sugiere-otro-referendum-para-despedir-a-evo-morales.html\"\n}"
+						},
+						{
+							"name": "Update Content with Tags",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 2\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240222\",\r\n    \"category_id\": 18,\r\n    \"tags\": [2,3]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/contents/9",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"contents",
+										"9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 23 Feb 2024 14:50:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 9,\n    \"pretitle\": null,\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 2\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales-2\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"format\": \"WITH_IMAGE\",\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"20240222\",\n    \"category_title\": \"Política\",\n    \"category_alias\": \"politica\",\n    \"created_at\": \"2024-02-23T14:41:22.000000Z\",\n    \"updated_at\": \"2024-02-23T14:48:09.000000Z\",\n    \"created_by\": \"system\",\n    \"updated_by\": \"system\",\n    \"category_id\": 18,\n    \"url\": \"/politica/20240222_lima-sugiere-otro-referendum-para-despedir-a-evo-morales-2.html\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Comment (partial)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"PUBLISHED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/comments/13",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"comments",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/comments/13",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"comments",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}",
+					"host": [
+						"{{HOST}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api2/v1/categories",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api2",
+						"v1",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Política\",\r\n    \"position\": 20,\r\n    \"published\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/categories",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/categories/50",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"categories",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Category",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Prueba 4\",\r\n    \"position\": 4,\r\n    \"published\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/categories/6",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"categories",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Category (partial)",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"published\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/categories/5",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"categories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Category",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/categories/5",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"categories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Contents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/contents",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Content",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 3\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240222\",\r\n    \"category_id\": 18,\r\n    \"tags\": [5]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/contents",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contents"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Content with wrong edition_date",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"tags\": \"referéndum,Evo Morales,Iván Lima\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"featured\": true,\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"1\",\r\n    \"category_title\": \"Política\",\r\n    \"category_alias\": \"politica\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/contents",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"contents"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.27"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Feb 2024 23:40:05 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"tags\": \"referéndum,Evo Morales,Iván Lima\",\n    \"format\": \"WITH_IMAGE\",\n    \"featured\": true,\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"1\",\n    \"category_title\": \"Política\",\n    \"category_alias\": \"politica\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales\",\n    \"created_by\": \"system\",\n    \"updated_at\": \"2024-02-22T23:40:05.000000Z\",\n    \"created_at\": \"2024-02-22T23:40:05.000000Z\",\n    \"id\": 1,\n    \"url\": \"/politica/1_lima-sugiere-otro-referendum-para-despedir-a-evo-morales.html\"\n}"
+				},
+				{
+					"name": "Create Content",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240222\",\r\n    \"category_id\": 18\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/contents",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.27"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Feb 2024 00:37:14 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"format\": \"WITH_IMAGE\",\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"20240222\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales\",\n    \"created_by\": \"system\",\n    \"category_title\": \"Política\",\n    \"category_alias\": \"politica\",\n    \"updated_at\": \"2024-02-23T00:37:14.000000Z\",\n    \"created_at\": \"2024-02-23T00:37:14.000000Z\",\n    \"id\": 4,\n    \"url\": \"/politica/20240222_lima-sugiere-otro-referendum-para-despedir-a-evo-morales.html\"\n}"
+				},
+				{
+					"name": "Create Content with Tags",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 2\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240222\",\r\n    \"category_id\": 18,\r\n    \"tags\": [2, 3]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/contents",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.27"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Feb 2024 14:41:22 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 2\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"format\": \"WITH_IMAGE\",\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"20240222\",\n    \"category_id\": 18,\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales-2\",\n    \"created_by\": \"system\",\n    \"category_title\": \"Política\",\n    \"category_alias\": \"politica\",\n    \"updated_at\": \"2024-02-23T14:41:22.000000Z\",\n    \"created_at\": \"2024-02-23T14:41:22.000000Z\",\n    \"id\": 9,\n    \"url\": \"/politica/20240222_lima-sugiere-otro-referendum-para-despedir-a-evo-morales-2.html\"\n}"
+				}
+			]
+		},
+		{
+			"name": "View Content",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/contents/7/tags",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contents",
+						"7",
+						"tags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Content",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 2\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240222\",\r\n    \"category_id\": 18,\r\n    \"tags\": [2,3]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/contents/9",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contents",
+						"9"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update Content with error in category_alias",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"tags\": \"referéndum,Evo Morales,Iván Lima\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"featured\": true,\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"1\",\r\n    \"category_title\": \"Política\",\r\n    \"category_alias\": \"politica2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/contents/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.27"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Feb 2024 23:46:12 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"tags\": \"referéndum,Evo Morales,Iván Lima\",\n    \"format\": \"WITH_IMAGE\",\n    \"featured\": true,\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"1\",\n    \"category_title\": \"Política\",\n    \"category_alias\": \"politica2\",\n    \"created_at\": \"2024-02-22T23:40:05.000000Z\",\n    \"updated_at\": \"2024-02-22T23:46:12.000000Z\",\n    \"created_by\": \"system\",\n    \"updated_by\": \"system\",\n    \"url\": \"/politica2/1_lima-sugiere-otro-referendum-para-despedir-a-evo-morales.html\"\n}"
+				},
+				{
+					"name": "Update Content",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240223\",\r\n    \"category_id\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/contents/4",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								"4"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.27"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Feb 2024 00:45:54 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 4,\n    \"pretitle\": \"También plantea debatir sobre la redistribución de escaños y la elección judicial\",\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"format\": \"WITH_IMAGE\",\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"20240223\",\n    \"category_title\": \"Nacional\",\n    \"category_alias\": \"nacional\",\n    \"created_at\": \"2024-02-23T00:37:14.000000Z\",\n    \"updated_at\": \"2024-02-23T00:45:54.000000Z\",\n    \"created_by\": \"system\",\n    \"updated_by\": \"system\",\n    \"category_id\": null,\n    \"url\": \"/nacional/20240223_lima-sugiere-otro-referendum-para-despedir-a-evo-morales.html\"\n}"
+				},
+				{
+					"name": "Update Content with Tags",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 2\",\r\n    \"author\": \"Sucre/CORREO DEL SUR\",\r\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\r\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\r\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\r\n    \"format\": \"WITH_IMAGE\",\r\n    \"status\": \"PUBLISHED\",\r\n    \"edition_date\": \"20240222\",\r\n    \"category_id\": 18,\r\n    \"tags\": [2,3]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/contents/9",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								"9"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.27"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Feb 2024 14:50:49 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 9,\n    \"pretitle\": null,\n    \"title\": \"Lima sugiere otro referéndum para “despedir” a Evo Morales 2\",\n    \"alias\": \"lima-sugiere-otro-referendum-para-despedir-a-evo-morales-2\",\n    \"author\": \"Sucre/CORREO DEL SUR\",\n    \"image_url\": \"https://correodelsur.com/img/contents/images_640/2024/02/22/b7a75a6d-d061-47f4-b964-475df516749f.jpg\",\n    \"introduction\": \"Según su propuesta, la consulta sería el mismo día de las elecciones judiciales\",\n    \"body\": \"Para el ministro de Justicia, Iván Lima, el resultado del 21F es “definitivo”; sin embargo, sugirió que, junto a las elecciones judiciales de este año, se convoque a otro referéndum para reformar parcialmente la Constitución Política del Estado (CPE), previa aprobación por dos tercios de votos de la Asamblea Legislativa, así “despedimos a quien destruyó la independencia judicial”, en alusión a Evo Morales.\",\n    \"format\": \"WITH_IMAGE\",\n    \"status\": \"PUBLISHED\",\n    \"edition_date\": \"20240222\",\n    \"category_title\": \"Política\",\n    \"category_alias\": \"politica\",\n    \"created_at\": \"2024-02-23T14:41:22.000000Z\",\n    \"updated_at\": \"2024-02-23T14:48:09.000000Z\",\n    \"created_by\": \"system\",\n    \"updated_by\": \"system\",\n    \"category_id\": 18,\n    \"url\": \"/politica/20240222_lima-sugiere-otro-referendum-para-despedir-a-evo-morales-2.html\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Content (partial)",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"author\": \"CORREO DEL SUR\",\r\n    \"category_id\": 11,\r\n    \"tags\": [2]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/contents/4",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contents",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Content",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/contents/10",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contents",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Tags by Content Id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "zb5IBIpAR1bvQrBvjZOcWyj5v9gqFct2j9aJS06AXiFZDhN9JsHtowm83MMY8alc",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/v1/contents/1/tags",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contents",
+						"1",
+						"tags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Tags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/tags",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Tag",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/tags/2",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tags",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tag",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Inundaciones\",\r\n    \"published\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/tags",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Tag",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Escasez de Dólares\",\r\n    \"published\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/tags/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tags",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Tag (partial)",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"published\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v1/tags/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tags",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Tag",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/v1/tags/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tags",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"JWT_ACCESS_TOKEN\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@newspaper.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/auth/login",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User authenticated",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_ACCESS_TOKEN}}error",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/auth/me",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"JWT_ACCESS_TOKEN\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/auth/refresh",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/auth/logout",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
